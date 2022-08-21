@@ -3,22 +3,26 @@ const mongoose = require("mongoose");
 const app = express();
 const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
-const authRoute = require("./routes/auth");
+const { register, login } = require("./routes/auth");
 
+const authRouter = express.Router();
 
 
 dotenv.config();
 app.use(express.json());
 
 
-mongoose.connect(process.env.MONGO_URL)
-.then(()=>console.log("mongoDB connection Successfull!!"))
-.catch((error)=>console.log(error));
+mongoose
+    .connect(process.env.MONGO_URL)
+    .then(()=>console.log("mongoDB connection Successfull!!"))
+    .catch((error)=>console.log(error)
+);
 
+app.use("/api/auth", authRouter);
+authRouter.post("/register", register);
+authRouter.post("/login", login);
 
-app.use("/api/auth", authRoute);
-
-
+app.use("/api/users", userRoute);
 
 
 
