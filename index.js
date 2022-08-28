@@ -2,11 +2,25 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const dotenv = require("dotenv");
-const { updateUser, deleteUser, getUser, getAllUser } = require("./routes/user");
+const {
+  updateUser,
+  deleteUser,
+  getUser,
+  getAllUser,
+} = require("./routes/user");
 const { register, login } = require("./routes/auth");
-const { createProduct, updateProduct, deleteProduct } = require("./routes/product");
+const {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getProduct,
+} = require("./routes/product");
 const cors = require("cors");
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./routes/verifyToken");
+const {
+  verifyToken,
+  verifyTokenAndAuthorization,
+  verifyTokenAndAdmin,
+} = require("./routes/verifyToken");
 
 const authRouter = express.Router();
 const userRouter = express.Router();
@@ -16,12 +30,10 @@ app.use(cors());
 dotenv.config();
 app.use(express.json());
 
-
 mongoose
-    .connect(process.env.MONGO_URL)
-    .then(()=>console.log("mongoDB connection Successfull!!"))
-    .catch((error)=>console.log(error)
-);
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("mongoDB connection Successfull!!"))
+  .catch((error) => console.log(error));
 
 app.use("/api/auth", authRouter);
 authRouter.post("/register", register);
@@ -37,9 +49,8 @@ app.use("/api/product", productRouter);
 productRouter.post("/", verifyTokenAndAdmin, createProduct);
 productRouter.put("/:id", verifyTokenAndAdmin, updateProduct);
 productRouter.delete("/:id", verifyTokenAndAdmin, deleteProduct);
+productRouter.get("/:id", getProduct);
 
-
-
-app.listen(process.env.PORT || 5000, ()=>{
-    console.log("Backend server is running at port 5000");
+app.listen(process.env.PORT || 5000, () => {
+  console.log("Backend server is running at port 5000");
 });

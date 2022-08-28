@@ -38,12 +38,21 @@ const deleteProduct = async (req, res)=> {
     } catch (error) {
         return res.status(500).json(error);
     }
-}
+};
 
+//GET PRODUCT
+const getProduct = async (req, res)=> {
+    try {
+        const getsProductbyId = await Product.findById(req.params.id);
+        return res.status(200).json(getsProductbyId);
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+};
 
 
 module.exports = {
-    createProduct, updateProduct, deleteProduct
+    createProduct, updateProduct, deleteProduct, getProduct
 }
 
 
