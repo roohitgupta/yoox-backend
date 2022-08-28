@@ -14,7 +14,15 @@ const {
   updateProduct,
   deleteProduct,
   getProduct,
+  getAllProduct
 } = require("./routes/product");
+const {
+  createCart,
+  updateCart,
+  deleteCart,
+  getCart,
+  getAllCart
+} = require("./routes/cart");
 const cors = require("cors");
 const {
   verifyToken,
@@ -25,6 +33,7 @@ const {
 const authRouter = express.Router();
 const userRouter = express.Router();
 const productRouter = express.Router();
+const cartRouter = express.Router();
 
 app.use(cors());
 dotenv.config();
@@ -49,7 +58,16 @@ app.use("/api/product", productRouter);
 productRouter.post("/", verifyTokenAndAdmin, createProduct);
 productRouter.put("/:id", verifyTokenAndAdmin, updateProduct);
 productRouter.delete("/:id", verifyTokenAndAdmin, deleteProduct);
-productRouter.get("/:id", getProduct);
+productRouter.get("/find/:id", getProduct);
+productRouter.get("/", getAllProduct);
+
+app.use("/api/cart", cartRouter);
+cartRouter.post("/", verifyToken, createCart);
+cartRouter.put("/:id", verifyTokenAndAuthorization, updateCart);
+cartRouter.delete("/:id", verifyTokenAndAuthorization, deleteCart);
+cartRouter.get("/find/:userId", verifyTokenAndAuthorization, getCart);
+cartRouter.get("/", verifyTokenAndAdmin, getAllCart);
+
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Backend server is running at port 5000");

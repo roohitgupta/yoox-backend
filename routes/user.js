@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const CryptoJS = require("crypto-js");
 
-
 //UPDATE
 const updateUser = async (req, res) => {
   if (req.body.password) {
@@ -24,7 +23,6 @@ const updateUser = async (req, res) => {
     return res.status(500).json(err);
   }
 };
-
 
 //DELETE
 const deleteUser = async (req, res) => {
@@ -59,10 +57,10 @@ const getAllUser = async (req, res) => {
     return res.status(500).json(err);
   }
 };
- 
 
-
-
-module.exports = { 
-  updateUser, deleteUser, getUser, getAllUser
+module.exports = {
+  updateUser,
+  deleteUser,
+  getUser,
+  getAllUser,
 };
