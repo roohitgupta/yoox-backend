@@ -5,13 +5,10 @@ const dotenv = require("dotenv");
 const { updateUser, deleteUser, getUser, getAllUser } = require("./routes/user");
 const { register, login } = require("./routes/auth");
 const cors = require("cors");
-const {
-  verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
-} = require("./routes/verifyToken");
+const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./routes/verifyToken");
 
 const authRouter = express.Router();
+const userRouter = express.Router();
 
 app.use(cors());
 dotenv.config();
@@ -28,11 +25,11 @@ app.use("/api/auth", authRouter);
 authRouter.post("/register", register);
 authRouter.post("/login", login);
 
-app.use("/api/users", userRoute);
+app.use("/api/users", userRouter);
 userRouter.put("/:id", verifyTokenAndAuthorization, updateUser);
-userRouter.put("/:id", verifyTokenAndAuthorization, deleteUser);
-userRouter.put("/:id", verifyTokenAndAdmin, getUser);
-userRouter.put("/", verifyTokenAndAdmin, getAllUser);
+userRouter.delete("/:id", verifyTokenAndAuthorization, deleteUser);
+userRouter.get("/:id", verifyTokenAndAdmin, getUser);
+userRouter.get("/", verifyTokenAndAdmin, getAllUser);
 
 
 
