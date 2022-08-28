@@ -34,7 +34,7 @@ userRouter.get("/:id", verifyTokenAndAdmin, getUser);
 userRouter.get("/", verifyTokenAndAdmin, getAllUser);
 
 app.use("/api/product", productRouter);
-
+productRouter.post("/", verifyTokenAndAdmin, createProduct);
 
 
 
