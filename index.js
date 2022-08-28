@@ -4,7 +4,7 @@ const app = express();
 const dotenv = require("dotenv");
 const { updateUser, deleteUser, getUser, getAllUser } = require("./routes/user");
 const { register, login } = require("./routes/auth");
-const { createProduct } = require("./routes/product");
+const { createProduct, updateProduct } = require("./routes/product");
 const cors = require("cors");
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./routes/verifyToken");
 
@@ -35,6 +35,7 @@ userRouter.get("/", verifyTokenAndAdmin, getAllUser);
 
 app.use("/api/product", productRouter);
 productRouter.post("/", verifyTokenAndAdmin, createProduct);
+productRouter.put("/:id", verifyTokenAndAdmin, updateProduct);
 
 
 
